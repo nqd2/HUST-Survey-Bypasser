@@ -1,6 +1,6 @@
 # HUST Survey Bypasser
 
-- **Auto Fill**: Automatically selects "4. Strongly Agree" (or the highest equivalent rating) for all questions.
+- **Auto Fill**: Automatically selects "4." or "4:" (or the highest equivalent rating) for all questions.
 - **Auto Submit**: Automatically clicks the Submit button after filling.
 - **Flexible Configuration**:
     - Toggle Auto-fill On/Off.

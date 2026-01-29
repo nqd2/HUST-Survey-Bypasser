@@ -10,18 +10,22 @@
 
 ## Installation
 
-1. Download the `HUST-Survey-Bypasser.zip` file release.
-2. Open Chrome and navigate to: `chrome://extensions/`
-3. Enable **Developer mode** (Top right corner).
-4. Drag and drop the **HUST-Survey-Bypasser.zip** file directly into the browser window.
-   - *Note: If drag & drop doesn't work, unzip the file, click **Load unpacked**, and select the unzipped folder.*
+To avoid errors (such as "Could not load icon"), please follow these steps strictly:
+
+1.  Download the `HUST-Survey-Bypasser.zip` file.
+2.  **Extract (Unzip)** the downloaded file to a folder on your computer (e.g., Desktop or Documents).
+    * *Important: Do not skip this step. Do not use the zip file directly.*
+3.  Open Chrome and navigate to: `chrome://extensions/` or `edge://extensions/` (or any other equivalent).
+4.  Enable **Developer mode** (Top right corner).
+5.  Click the **Load unpacked** button (Top left corner).
+6.  Select the **folder** you extracted in Step 2 (ensure it contains the `manifest.json` file).
 
 ## Usage
 
-1. Log in to your personal SIS account.
-2. Open the survey page (e.g., `https://ctt-sis.hust.edu.vn/Surveys/dghp.aspx...`).
-3. The tool will automatically run and fill out the form.
-4. If notifications are enabled, an alert will pop up confirming completion.
+1.  Log in to your personal SIS account.
+2.  Open the survey page (e.g., `https://ctt-sis.hust.edu.vn/Surveys/dghp.aspx...`).
+3.  The tool will automatically run and fill out the form immediately.
+4.  If notifications are enabled, an alert will pop up confirming completion.
 
 ## Configuration
 

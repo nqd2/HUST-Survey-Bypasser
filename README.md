@@ -28,7 +28,7 @@ To avoid errors (such as "Could not load icon"), please follow these steps stric
 4.  If notifications are enabled, an alert will pop up confirming completion.
 
 ## Configuration
-![Demo](/images/demo.png)
+![Demo](/images/demo.png) <br/>
 Click the Extension icon on the toolbar to open the settings menu:
 - **Auto Fill**: Toggle off if you want to fill the survey manually.
 - **Alert**: Toggle off to disable the completion popup notification.

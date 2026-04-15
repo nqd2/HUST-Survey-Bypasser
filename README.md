@@ -1,42 +1,40 @@
-# HUST Survey Bypasser
+# HUST Survey Auto-Bypass
 
-- **Auto Fill**: Automatically selects "4." or "4:" (or the highest equivalent rating) for all questions.
-- **Auto Submit**: Automatically clicks the Submit button after filling.
-- **Flexible Configuration**:
-    - Toggle Auto-fill On/Off.
-    - Toggle Alert notifications On/Off upon completion.
-- **Modern Interface**: Intuitive and easy-to-use popup control.
-- **Safe & Secure**: Runs completely offline in your browser, no data is sent anywhere.
+Chrome extension (Manifest V3) that auto-fills certain HUST survey pages and can submit when done. Settings persist in `chrome.storage.sync`.
+
+## Supported pages
+
+| Host | Path | Behavior |
+|------|------|----------|
+| `ctt-sis.hust.edu.vn` | `/Surveys/dghp.aspx*` | For rows whose label starts with `4.` or `4:`, clicks the first rating control in that row, then submits. |
+| `e.hust.edu.vn` | `/survey/*` | Fills required controls: random option for radio groups, random non-empty subset for checkbox groups, middle column for Likert matrix tables, `.` for required short text. Waits for the React form to mount, then submits once. |
+
+Optional questions are skipped where the extension only targets required fields (e.g. `aria-required`, `ant-form-item-required`, or Ant Table Likert detection for matrix blocks).
+
+## Settings (in-page panel)
+
+There is **no popup**. A small floating panel is injected at the **bottom-right** of supported survey tabs:
+
+- **Tự động điền** — Turn off to load the page without auto-fill.
+- **Hiện thông báo** — Turn off to suppress the completion `alert` after submit.
 
 ## Installation
 
-To avoid errors (such as "Could not load icon"), please follow these steps strictly:
-
-1.  Download the `HUST-Survey-Bypasser.zip` file.
-2.  **Extract (Unzip)** the downloaded file to a folder on your computer (e.g., Desktop or Documents).
-    * *Important: Do not skip this step. Do not use the zip file directly.*
-3.  Open Chrome and navigate to: `chrome://extensions/` or `edge://extensions/` (or any other equivalent).
-4.  Enable **Developer mode** (Top right corner).
-5.  Click the **Load unpacked** button (Top left corner).
-6.  Select the **folder** you extracted in Step 2 (ensure it contains the `manifest.json` file).
+1. Clone or download this repo and use the folder that contains `manifest.json` (do not load a zip without unpacking).
+2. Open `chrome://extensions/` or `edge://extensions/`.
+3. Enable **Developer mode**.
+4. Click **Load unpacked** and select that folder.
 
 ## Usage
 
-1.  Log in to your personal SIS account.
-2.  Open the survey page (e.g., `https://ctt-sis.hust.edu.vn/Surveys/dghp.aspx...`).
-3.  The tool will automatically run and fill out the form immediately.
-4.  If notifications are enabled, an alert will pop up confirming completion.
-
-## Configuration
-![Demo](/images/demo.png) <br/>
-Click the Extension icon on the toolbar to open the settings menu:
-- **Auto Fill**: Toggle off if you want to fill the survey manually.
-- **Alert**: Toggle off to disable the completion popup notification.
+1. Open a supported survey URL while logged in.
+2. Adjust toggles on the panel if needed.
+3. On load, the script runs once per page load (e.hust also retries while the form appears).
 
 ## Disclaimer
 
-This extension is created for educational purposes and to save time on repetitive tasks. The author is not responsible for the content of your evaluations. Please consider reviewing and filling out the survey manually if you wish to provide genuine feedback for your lecturers.
+Educational / time-saving use only. You are responsible for the answers you submit. Prefer filling surveys honestly when feedback matters.
 
 ## License
 
-MIT License.
+MIT — see [LICENSE](LICENSE).

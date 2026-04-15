@@ -1,16 +1,18 @@
 {
   "manifest_version": 3,
   "name": "HUST Survey Auto-Bypass",
-  "version": "1.0",
+  "version": "1.4",
   "description": "Tự động điền survey HUST và bypass các câu hỏi.",
   "permissions": ["storage"],
   "action": {
-    "default_popup": "popup.html",
-    "default_title": "Cài đặt Survey"
+    "default_title": "HUST Survey Auto-Bypass"
   },
   "content_scripts": [
     {
-      "matches": ["https://ctt-sis.hust.edu.vn/Surveys/dghp.aspx*"],
+      "matches": [
+        "https://ctt-sis.hust.edu.vn/Surveys/dghp.aspx*",
+        "https://e.hust.edu.vn/survey/*"
+      ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }

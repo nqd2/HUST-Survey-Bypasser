@@ -1,57 +1,71 @@
 name: Create release ZIP
+
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+
     env:
       REPO_NAME: ${{ github.event.repository.name }}
       TAG_NAME: ${{ github.ref_name }}
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: Create zip with a single top-level folder (so manifest.json is inside that folder)
+      - name: Create zip with a single top-level folder
         run: |
           set -e
+
           ZIP_NAME="${REPO_NAME}-${TAG_NAME}.zip"
           PACKAGE_DIR="package"
           TOP_DIR="${REPO_NAME}"
+
           rm -rf "$PACKAGE_DIR" "$ZIP_NAME"
           mkdir -p "$PACKAGE_DIR/$TOP_DIR"
-          # Copy repository files into the top-level folder, excluding git data and workflows
-          rsync -a --delete --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude="$ZIP_NAME" ./ "$PACKAGE_DIR/$TOP_DIR/"
-          # Verify manifest exists (fail early if missing)
+
+          rsync -a \
+            --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude="$ZIP_NAME" \
+            ./ "$PACKAGE_DIR/$TOP_DIR/"
+
           if [ ! -f "$PACKAGE_DIR/$TOP_DIR/manifest.json" ]; then
-            echo "ERROR: manifest.json not found at repository root. Place manifest.json at repo root so it will be inside the top-level folder in the zip."
+            echo "ERROR: manifest.json not found at repository root."
+            echo "Place manifest.json at repo root so it will be inside the top-level folder in the zip."
             exit 1
           fi
-          # Create zip containing the single top-level folder
-          (cd "$PACKAGE_DIR" && zip -r "../$ZIP_NAME" "$TOP_DIR")
+
+          cd "$PACKAGE_DIR"
+          zip -r "../$ZIP_NAME" "$TOP_DIR"
+          cd ..
+
           ls -lh "$ZIP_NAME"
 
-      - name: Create GitHub release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ env.TAG_NAME }}
-          body: "Automated release: zip with top-level folder containing manifest.json"
-          draft: false
-          prerelease: false
+      - name: Create GitHub release and upload zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
 
-      - name: Upload zip to release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.REPO_NAME }}-${{ env.TAG_NAME }}.zip
-          asset_name: ${{ env.REPO_NAME }}-${{ env.TAG_NAME }}.zip
-          asset_content_type: application/zip
+          ZIP_NAME="${REPO_NAME}-${TAG_NAME}.zip"
+
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            gh release upload "$TAG_NAME" "$ZIP_NAME" --clobber
+          else
+            gh release create "$TAG_NAME" "$ZIP_NAME" \
+              --title "$TAG_NAME" \
+              --notes "Automated release: zip with top-level folder containing manifest.json"
+          fi

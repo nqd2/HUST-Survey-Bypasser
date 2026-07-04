@@ -72,5 +72,5 @@ jobs:
           else
             gh release create "$TAG_NAME" "$ZIP_NAME" \
               --title "$TAG_NAME" \
-              --notes "Automated source ZIP release. manifest.json is at ZIP root."
+              --notes "Automated ZIP release. Download this then drag n drop into chrome://extensions"
           fi

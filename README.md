@@ -38,3 +38,10 @@ Educational / time-saving use only. You are responsible for the answers you subm
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## 👀 Visitor Count
+
+<div align="center"><img src="https://visitor-badge.laobi.icu/badge?page_id=nqd2HUSTServeyBypasser.visitor-badge" alt="Visitor Count"/>
+
+</div>
+
